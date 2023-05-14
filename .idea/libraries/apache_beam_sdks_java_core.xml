@@ -1,0 +1,30 @@
+<component name="libraryTable">
+  <library name="apache.beam.sdks.java.core" type="repository">
+    <properties maven-id="org.apache.beam:beam-sdks-java-core:2.37.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-sdks-java-core/2.37.0/beam-sdks-java-core-2.37.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-model-pipeline/2.37.0/beam-model-pipeline-2.37.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/conscrypt/conscrypt-openjdk-uber/2.5.1/conscrypt-openjdk-uber-2.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-model-job-management/2.37.0/beam-model-job-management-2.37.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-vendor-bytebuddy-1_11_0/0.1/beam-vendor-bytebuddy-1_11_0-0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-vendor-grpc-1_43_2/0.1/beam-vendor-grpc-1_43_2-0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/beam/beam-vendor-guava-26_0-jre/0.1/beam-vendor-guava-26_0-jre-0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/avro/avro/1.8.2/avro-1.8.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.9.13/jackson-core-asl-1.9.13.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-mapper-asl/1.9.13/jackson-mapper-asl-1.9.13.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/thoughtworks/paranamer/paranamer/2.7/paranamer-2.7.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-compress/1.8.1/commons-compress-1.8.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/tukaani/xz/1.5/xz-1.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.10.10/joda-time-2.10.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
