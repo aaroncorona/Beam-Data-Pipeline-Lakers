@@ -1,11 +1,15 @@
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.beam.sdk.Pipeline;
 import org.apache.beam.sdk.io.TextIO;
+import org.apache.beam.sdk.schemas.transforms.Join;
 import org.apache.beam.sdk.transforms.*;
-import org.apache.beam.sdk.values.KV;
-import org.apache.beam.sdk.values.PCollection;
-import org.apache.beam.sdk.values.TypeDescriptors;
+import org.apache.beam.sdk.transforms.join.CoGbkResult;
+import org.apache.beam.sdk.transforms.join.CoGroupByKey;
+import org.apache.beam.sdk.transforms.join.KeyedPCollectionTuple;
+import org.apache.beam.sdk.values.*;
 
 public class LakersPipeline {
 
@@ -14,6 +18,8 @@ public class LakersPipeline {
             "src/assets/data/lakers_roster_positions_2023.csv";
     private static final String COLLEGES_ROSTER_PATH =
             "src/assets/data/lakers_roster_colleges_2023.csv";
+    private static final String OUTPUT_PATH =
+            "src/assets/data/lakers_combined_roster_2023.csv";
 
     /* Runs the pipeline */
     public static void runPipeline(){
@@ -29,11 +35,11 @@ public class LakersPipeline {
         try {
             rosterPositions = extractCSV(POSITIONS_ROSTER_PATH);
             rosterColleges = extractCSV(COLLEGES_ROSTER_PATH);
-        } catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e);
         }
 
-        // Convert the elements to key-value pairs
+        // Convert to collections of key-value pairs based on player name
         PCollection<KV<String, String>> rosterPositionsKV = rosterPositions.apply(
                 "Convert to KV",
                 MapElements
@@ -45,9 +51,14 @@ public class LakersPipeline {
                         .into(TypeDescriptors.kvs(TypeDescriptors.strings(), TypeDescriptors.strings()))
                         .via(new MapToStringKV()));
 
-        // Print
-        printStringKVCollection(rosterPositionsKV);
-        printStringKVCollection(rosterCollegesKV);
+        // Join the PCollections and aggregate all the values by player name
+        PCollection<KV<String, CoGbkResult>> rostersCombined =
+                KeyedPCollectionTuple.of(new TupleTag<>(), rosterPositionsKV)
+                        .and(new TupleTag<>(), rosterCollegesKV)
+                        .apply(CoGroupByKey.create());
+
+        // Print results
+        printStringKVCollection(rostersCombined);
     }
 
     /* Helper static class to define a mapping of String to KV<String, String> for roster data */
@@ -62,25 +73,14 @@ public class LakersPipeline {
 
     /* Helper to read a given CSV file to a PCollection */
     private static PCollection<String> extractCSV(String path) throws FileNotFoundException {
-        PCollection<String> orders = PIPELINE.apply("Read Roster CSV", TextIO.read().from(path));
-        return orders;
-    }
-
-    /* Helper to print a PCollection with Strings */
-    private static void printStringCollection(PCollection<String> collection) {
-        // Convert the elements to uppercase.
-        collection.apply("Print", ParDo.of(new DoFn<String, String>() {
-            @ProcessElement
-            public void processElement(ProcessContext c) {
-                System.out.println(c.element());
-            }
-        }));
+        return PIPELINE.apply("Read Roster CSV", TextIO.read().from(path));
     }
 
     /* Helper to print a PCollection with KV String Paids */
-    private static void printStringKVCollection(PCollection<KV<String, String>> collection) {
+    private static void printStringKVCollection(PCollection<KV<String, CoGbkResult>> collection) {
         // Convert the elements to uppercase.
-        collection.apply("Print", ParDo.of(new DoFn<KV<String, String>, KV<String, String>>() {
+        collection.apply("Print",
+                ParDo.of(new DoFn<KV<String, CoGbkResult>, KV<String, String>>() {
             @ProcessElement
             public void processElement(ProcessContext c) {
                 System.out.println(c.element());
